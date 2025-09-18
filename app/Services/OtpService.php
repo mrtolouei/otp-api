@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Dto\OtpGenerateResult;
+use App\Dto\OtpVerifyResult;
 use App\Events\OtpGeneratedEvent;
 use Illuminate\Support\Facades\Cache;
 
@@ -28,15 +29,21 @@ class OtpService
         );
     }
 
-    public function verify(string $key, int $code): bool
+    public function verify(string $uuid, int $code): OtpVerifyResult
     {
-        if (Cache::has($key)) {
-            $data = Cache::get($key);
+        if (Cache::has($uuid)) {
+            $data = Cache::get($uuid);
             if ($data['code'] === $code) {
-                Cache::forget($key);
-                return true;
+                $mobile = $data['mobile'];
+                Cache::forget($uuid);
+                return new OtpVerifyResult(
+                    ok: true,
+                    mobile: $mobile
+                );
             }
         }
-        return false;
+        return new OtpVerifyResult(
+            ok: false
+        );
     }
 }
