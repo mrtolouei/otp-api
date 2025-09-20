@@ -5,7 +5,7 @@ namespace App\Services;
 use OpenSSLAsymmetricKey;
 use UnexpectedValueException;
 
-class JsonWebTokenService
+class JwtService
 {
     private int $algorithm;
     private OpenSSLAsymmetricKey $privateKey;

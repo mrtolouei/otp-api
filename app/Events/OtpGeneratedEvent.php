@@ -10,7 +10,7 @@ class OtpGeneratedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public string $uuid)
+    public function __construct(public string $key)
     {
         //
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Otp;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VerifyOtpRequest;
-use App\Services\OtpService;
+use App\Services\Otp\OtpService;
 use Illuminate\Http\JsonResponse;
 
 class VerifyOtpController extends Controller
@@ -16,7 +16,10 @@ class VerifyOtpController extends Controller
 
     public function __invoke(VerifyOtpRequest $request): JsonResponse
     {
-        $auth = $this->otpService->verify($request->input('uuid'), $request->input('code'));
+        $auth = $this->otpService->verify(
+            uuid: $request->input('uuid'),
+            code: $request->input('code'),
+        );
         if ($auth->isOk()) {
             return response()->json([
                 'message' => __('OTP verified successfully.'),

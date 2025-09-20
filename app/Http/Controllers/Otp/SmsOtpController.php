@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Otp;
 
+use App\Enums\OtpChannelEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SmsOtpRequest;
-use App\Services\OtpService;
+use App\Services\Otp\OtpService;
 use Illuminate\Http\JsonResponse;
 
 class SmsOtpController extends Controller
@@ -17,8 +18,9 @@ class SmsOtpController extends Controller
     public function __invoke(SmsOtpRequest $request): JsonResponse
     {
         $otp = $this->otpService->generate(
+            clientUuid: $request->input('company_uuid'),
             mobile: $request->input('to'),
-            key: $request->input('company_uuid')
+            channel: OtpChannelEnum::SMS,
         );
 
         return response()->json([

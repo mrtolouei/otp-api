@@ -2,7 +2,7 @@
 
 namespace App\Facades;
 
-use App\Services\JsonWebTokenService;
+use App\Services\JwtService;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -13,6 +13,6 @@ class JWT extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return JsonWebTokenService::class;
+        return JwtService::class;
     }
 }
