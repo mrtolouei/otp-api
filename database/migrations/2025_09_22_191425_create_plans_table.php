@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('voice_quota')->default(1);
             $table->unsignedInteger('months_duration')->default(1);
             $table->unsignedBigInteger('price')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

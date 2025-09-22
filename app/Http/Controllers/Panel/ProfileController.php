@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProfileRequest;
+use App\Http\Requests\Panel\StoreProfileRequest;
 use App\Http\Resources\UserResource;
 use Exception;
 use Illuminate\Http\JsonResponse;

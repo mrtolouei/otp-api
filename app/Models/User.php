@@ -22,6 +22,11 @@ class User extends Authenticatable
         'birthdate',
     ];
 
+    protected $with = [
+        'roles',
+        'subscription',
+    ];
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
