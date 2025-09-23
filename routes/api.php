@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Panel\AuthController;
+use App\Http\Controllers\Panel\ClientTokenController;
 use App\Http\Controllers\Panel\PlanController;
 use App\Http\Controllers\Panel\ProfileController;
 use App\Http\Controllers\Services\OtpSmsController;
@@ -22,6 +23,7 @@ Route::prefix('panel')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::apiResource('profile', ProfileController::class)->only(['index', 'store']);
+        Route::apiResource('client-tokens', ClientTokenController::class);
         Route::get('active-plans', [PlanController::class, 'actives']);
 
         //------- Admins Routes -------
