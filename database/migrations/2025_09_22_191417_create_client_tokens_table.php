@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('sender_name');
             $table->string('token', 1000);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class StoreClientTokenRequest extends FormRequest
     {
         return [
             'sender_name' => 'required|string',
+            'status' => 'required|boolean',
         ];
     }
 }

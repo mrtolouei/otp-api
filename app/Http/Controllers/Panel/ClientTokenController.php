@@ -27,7 +27,7 @@ class ClientTokenController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return ClientTokenResource::collection(
-            ClientToken::query()->where('user_id', $this->userId)->get()
+            ClientToken::filters()->where('user_id', $this->userId)->get()
         );
     }
 
@@ -51,6 +51,7 @@ class ClientTokenController extends Controller
             $clientToken = ClientToken::query()->create([
                 'user_id' => $this->userId,
                 'sender_name' => $request->input('sender_name'),
+                'status' => $request->input('status'),
                 'token' => md5(Str::uuid()->toString()),
             ]);
             $user->subscription->decrement('token_remaining');
@@ -71,6 +72,7 @@ class ClientTokenController extends Controller
             $clientToken = ClientToken::query()->where('user_id', $this->userId)->findOrFail($id);
             $clientToken->update([
                 'sender_name' => $request->input('sender_name'),
+                'status' => $request->input('status'),
             ]);
             $clientToken->refresh();
             DB::commit();
