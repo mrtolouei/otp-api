@@ -65,6 +65,35 @@ class ClientTokenController extends Controller
         }
     }
 
+    public function destroy(int $id): Response|JsonResponse
+    {
+        try {
+            $clientToken = ClientToken::query()->where('user_id', $this->userId)->findOrFail($id);
+            $clientToken->delete();
+            $user = User::with(['subscription'])->where('id', $this->userId)->first();
+            $user->subscription->increment('token_remaining');
+            return response()->noContent();
+        } catch (Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
+
+    public function regenerate(ClientToken $clientToken): JsonResponse|ClientTokenResource
+    {
+        try {
+            $clientToken->update([
+                'token' => md5(Str::uuid()->toString()),
+            ]);
+            return ClientTokenResource::make($clientToken);
+        } catch (Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
+
     public function update(UpdateClientTokenRequest $request, int $id): ClientTokenResource|JsonResponse
     {
         try {
@@ -79,21 +108,6 @@ class ClientTokenController extends Controller
             return ClientTokenResource::make($clientToken);
         } catch (Exception $exception) {
             DB::rollBack();
-            return response()->json([
-                'message' => $exception->getMessage()
-            ], 500);
-        }
-    }
-
-    public function destroy(int $id): Response|JsonResponse
-    {
-        try {
-            $clientToken = ClientToken::query()->where('user_id', $this->userId)->findOrFail($id);
-            $clientToken->delete();
-            $user = User::with(['subscription'])->where('id', $this->userId)->first();
-            $user->subscription->increment('token_remaining');
-            return response()->noContent();
-        } catch (Exception $exception) {
             return response()->json([
                 'message' => $exception->getMessage()
             ], 500);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static Builder filters()
@@ -28,11 +29,16 @@ class ClientToken extends Model
 
     public function scopeQ(Builder $query, string $value): Builder
     {
-        return $query->whereLike('sender_name',"%$value%");
+        return $query->whereLike('sender_name', "%$value%");
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function lastUsed(): HasOne
+    {
+        return $this->hasOne(OtpLog::class, 'client_token_id')->latest('id');
     }
 }
