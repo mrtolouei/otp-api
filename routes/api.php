@@ -4,6 +4,7 @@ use App\Http\Controllers\Panel\AuthController;
 use App\Http\Controllers\Panel\ClientTokenController;
 use App\Http\Controllers\Panel\PlanController;
 use App\Http\Controllers\Panel\ProfileController;
+use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\Services\OtpSmsController;
 use App\Http\Controllers\Services\OtpVerifyController;
 use App\Http\Middleware\ClientTokenMiddleware;
@@ -28,6 +29,7 @@ Route::prefix('panel')->group(function () {
         Route::get('active-plans', [PlanController::class, 'actives']);
 
         //------- Admins Routes -------
+        Route::apiResource('users', UserController::class);
         Route::apiResource('plans', PlanController::class);
     });
 });
