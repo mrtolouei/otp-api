@@ -19,7 +19,7 @@ class PlanController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return PlanResource::collection(
-            Plan::query()->latest('id')->paginate(request()->perPage ?? self::perPage),
+            Plan::filters()->latest('id')->paginate(request()->perPage ?? self::perPage),
         );
     }
 
