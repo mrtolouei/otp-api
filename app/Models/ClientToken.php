@@ -18,18 +18,18 @@ class ClientToken extends Model
 
     protected $fillable = [
         'user_id',
-        'sender_name',
+        'signature',
         'token',
-        'status',
+        'is_active',
     ];
 
     protected $casts = [
-        'status' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     public function scopeQ(Builder $query, string $value): Builder
     {
-        return $query->whereLike('sender_name', "%$value%");
+        return $query->whereLike('signature', "%$value%");
     }
 
     public function user(): BelongsTo

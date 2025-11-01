@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\ClientToken;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class ClientTokenSeeder extends Seeder
@@ -14,7 +13,7 @@ class ClientTokenSeeder extends Seeder
         $tokens = [
             [
                 'user_id' => 1,
-                'sender_name' => 'شرکت اصلی',
+                'signature' => 'شرکت اصلی',
                 'token' => md5(Str::uuid()->toString()),
             ],
         ];

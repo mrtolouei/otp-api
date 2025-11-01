@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('client_tokens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('sender_name');
+            $table->string('signature');
             $table->string('token', 1000);
-            $table->boolean('status')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

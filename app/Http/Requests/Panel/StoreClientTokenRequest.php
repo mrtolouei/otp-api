@@ -14,8 +14,8 @@ class StoreClientTokenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sender_name' => 'required|string',
-            'status' => 'required|boolean',
+            'signature' => 'required|string',
+            'is_active' => 'required|boolean',
         ];
     }
 }

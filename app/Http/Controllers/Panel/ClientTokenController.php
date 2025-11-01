@@ -50,8 +50,8 @@ class ClientTokenController extends Controller
             }
             $clientToken = ClientToken::query()->create([
                 'user_id' => $this->userId,
-                'sender_name' => $request->input('sender_name'),
-                'status' => $request->input('status'),
+                'signature' => $request->input('signature'),
+                'is_active' => $request->input('is_active'),
                 'token' => md5(Str::uuid()->toString()),
             ]);
             $user->subscription->decrement('token_remaining');
@@ -100,8 +100,8 @@ class ClientTokenController extends Controller
             DB::beginTransaction();
             $clientToken = ClientToken::query()->where('user_id', $this->userId)->findOrFail($id);
             $clientToken->update([
-                'sender_name' => $request->input('sender_name'),
-                'status' => $request->input('status'),
+                'signature' => $request->input('signature'),
+                'is_active' => $request->input('is_active'),
             ]);
             $clientToken->refresh();
             DB::commit();

@@ -12,9 +12,9 @@ class ClientTokenResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'user_id' => $this->resource->user_id,
-            'sender_name' => $this->resource->sender_name,
+            'signature' => $this->resource->signature,
             'token' => $this->resource->token,
-            'status' => $this->resource->status,
+            'is_active' => $this->resource->is_active,
             'last_used_at' => $this->resource->lastUsed->created_at ?? '',
             'created_at' => $this->resource->created_at,
         ];
