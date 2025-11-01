@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Panel\AuthController;
 use App\Http\Controllers\Panel\ClientTokenController;
+use App\Http\Controllers\Panel\DownloadController;
+use App\Http\Controllers\Panel\PackageController;
 use App\Http\Controllers\Panel\PlanController;
 use App\Http\Controllers\Panel\ProfileController;
 use App\Http\Controllers\Panel\UserController;
@@ -26,10 +28,12 @@ Route::prefix('panel')->group(function () {
         Route::apiResource('profile', ProfileController::class)->only(['index', 'store']);
         Route::apiResource('client-tokens', ClientTokenController::class);
         Route::patch('client-tokens/{clientToken}/regenerate', [ClientTokenController::class, 'regenerate']);
-        Route::get('packages', [PlanController::class, 'packages']);
+        Route::get('packages', [PackageController::class, 'index']);
+        Route::get('packages/{uuid}', [PackageController::class, 'show']);
 
         //------- Admins Routes -------
         Route::apiResource('users', UserController::class);
         Route::apiResource('plans', PlanController::class);
     });
 });
+Route::get('dl', DownloadController::class);

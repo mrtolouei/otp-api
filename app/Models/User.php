@@ -59,6 +59,11 @@ class User extends Authenticatable
 
     public function subscription(): HasOne
     {
-        return $this->hasOne(Subscription::class)->latest('id');
+        return $this->hasOne(Subscription::class)
+            ->latest('id')
+            ->where(function ($q) {
+                $q->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            });
     }
 }

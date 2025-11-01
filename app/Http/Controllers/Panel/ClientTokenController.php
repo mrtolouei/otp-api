@@ -42,8 +42,9 @@ class ClientTokenController extends Controller
     {
         try {
             DB::beginTransaction();
-            $user = User::with(['subscription'])->where('id', $this->userId)->first();
-            if (!$user->subscription || $user->subscription->token_remaining < 1) {
+            $user = User::with(['subscription.plan'])->where('id', $this->userId)->first();
+            $totalTokens = ClientToken::query()->where('user_id', $this->userId)->count();
+            if (!$user->subscription || $user->subscription->plan->token_quota <=  $totalTokens) {
                 return response()->json([
                     'message' => __('You have no remaining Token credits.')
                 ], 400);
@@ -54,7 +55,6 @@ class ClientTokenController extends Controller
                 'is_active' => $request->input('is_active'),
                 'token' => md5(Str::uuid()->toString()),
             ]);
-            $user->subscription->decrement('token_remaining');
             DB::commit();
             return ClientTokenResource::make($clientToken);
         } catch (Exception $exception) {
@@ -70,8 +70,6 @@ class ClientTokenController extends Controller
         try {
             $clientToken = ClientToken::query()->where('user_id', $this->userId)->findOrFail($id);
             $clientToken->delete();
-            $user = User::with(['subscription'])->where('id', $this->userId)->first();
-            $user->subscription->increment('token_remaining');
             return response()->noContent();
         } catch (Exception $exception) {
             return response()->json([
