@@ -26,7 +26,7 @@ Route::prefix('panel')->group(function () {
         Route::apiResource('profile', ProfileController::class)->only(['index', 'store']);
         Route::apiResource('client-tokens', ClientTokenController::class);
         Route::patch('client-tokens/{clientToken}/regenerate', [ClientTokenController::class, 'regenerate']);
-        Route::get('active-plans', [PlanController::class, 'actives']);
+        Route::get('available-plans', [PlanController::class, 'available']);
 
         //------- Admins Routes -------
         Route::apiResource('users', UserController::class);
