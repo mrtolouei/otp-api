@@ -78,7 +78,7 @@ class PlanController extends Controller
         }
     }
 
-    public function available(): AnonymousResourceCollection
+    public function packages(): AnonymousResourceCollection
     {
         return PlanResource::collection(
             Plan::query()->where('is_active', true)->latest('id')->get()
