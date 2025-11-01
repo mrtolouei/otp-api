@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return UserResource::collection(
-            User::query()->latest('id')->paginate(request()->perPage ?? self::perPage),
+            User::filters()->latest('id')->paginate(request()->perPage ?? self::perPage),
         );
     }
 
