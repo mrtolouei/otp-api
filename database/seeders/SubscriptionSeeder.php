@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Subscription;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SubscriptionSeeder extends Seeder
@@ -14,7 +13,6 @@ class SubscriptionSeeder extends Seeder
             [
                 'user_id' => 1,
                 'plan_id' => 1,
-                'token_remaining' => 100,
                 'sms_remaining' => 100,
                 'voice_remaining' => 100,
                 'expires_at' => null,

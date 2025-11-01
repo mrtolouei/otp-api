@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('plan_id')->constrained();
-            $table->unsignedInteger('token_remaining')->default(0);
             $table->unsignedInteger('sms_remaining')->default(0);
             $table->unsignedInteger('voice_remaining')->default(0);
             $table->date('expires_at')->nullable();
